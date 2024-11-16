@@ -107,7 +107,7 @@ SparcTargetMachine::SparcTargetMachine(const Target &T, const Triple &TT,
                         getEffectiveSparcCodeModel(
                             CM, getEffectiveRelocModel(RM), is64bit, JIT),
                         OL),
-      TLOF(std::make_unique<SparcELFTargetObjectFile>()), is64Bit(is64bit) {
+      TLOF(std::make_unique<SparcELFTargetObjectFile>()){
   initAsmInfo();
 }
 
