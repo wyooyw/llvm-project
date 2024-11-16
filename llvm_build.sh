@@ -1,0 +1,34 @@
+mkdir build
+# export LLVM_EXPERIMENTAL_TARGETS_TO_BUILD=CIM
+cd build
+# -DLLVM_TARGETS_TO_BUILD="Sparc" \
+
+# cmake -G Ninja ../llvm \
+#    -DLLVM_ENABLE_PROJECTS=mlir \
+#    -DLLVM_BUILD_EXAMPLES=ON \
+#    -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="CIM" \
+#    -DCMAKE_BUILD_TYPE=Debug \
+#    -DLLVM_ENABLE_ASSERTIONS=ON \
+#    -DLLVM_USE_SPLIT_DWARF=ON \
+#    -DCMAKE_C_COMPILER=clang \
+#    -DCMAKE_CXX_COMPILER=clang++ \
+#    -DLLVM_ENABLE_LLD=ON \
+#    -DLLVM_CCACHE_BUILD=ON
+# cmake --build . --target llc
+
+   # -DCMAKE_BUILD_TYPE=Debug \
+cmake -G Ninja ../llvm \
+   -DCMAKE_BUILD_TYPE=Release \
+   -DCMAKE_C_FLAGS_RELEASE="-O3" \
+   -DCMAKE_CXX_FLAGS_RELEASE="-O3" \
+   -DLLVM_ENABLE_PROJECTS="mlir;lld"\
+   -DLLVM_BUILD_EXAMPLES=ON \
+   -DLLVM_TARGETS_TO_BUILD="Native" \
+   -DLLVM_ENABLE_ASSERTIONS=ON \
+   -DLLVM_USE_SPLIT_DWARF=ON \
+   -DCMAKE_C_COMPILER=clang \
+   -DCMAKE_CXX_COMPILER=clang++ \
+   -DLLVM_ENABLE_LLD=ON \
+   -DLLVM_CCACHE_BUILD=ON \
+   -DLLVM_ENABLE_RTTI=ON
+cmake --build . --target check-mlir -j8
