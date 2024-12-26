@@ -103,6 +103,8 @@ def CallOp : Func_Op<"call",
   let assemblyFormat = [{
     $callee `(` $operands `)` attr-dict `:` functional-type($operands, results)
   }];
+
+  let hasFolder = 1;
 }
 
 //===----------------------------------------------------------------------===//

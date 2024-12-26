@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
-
+#include "mlir/Dialect/MemRef/IR/MemRef.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 
 #include "mlir/Conversion/ConvertToLLVM/ToLLVMInterface.h"
@@ -61,6 +61,13 @@ Operation *FuncDialect::materializeConstant(OpBuilder &builder, Attribute value,
 //===----------------------------------------------------------------------===//
 // CallOp
 //===----------------------------------------------------------------------===//
+
+LogicalResult
+CallOp::fold(FoldAdaptor adaptor,
+             llvm::SmallVectorImpl<::mlir::OpFoldResult> &results) {
+  // prefetch(memrefcast) -> prefetch
+  return memref::foldMemRefCast(*this);
+}
 
 LogicalResult CallOp::verifySymbolUses(SymbolTableCollection &symbolTable) {
   return success();
